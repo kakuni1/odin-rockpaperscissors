@@ -12,6 +12,18 @@ function getHumanChoice() {
   return lowerInput;
 }
 
+function humanWin(humanChoice, computerChoice) {
+  winner = "human";
+  console.log("You Win! " + humanChoice + " beats " + computerChoice);
+  humanScore++;
+}
+
+function computerWin(humanChoice, computerChoice) {
+  winner = "computer";
+  console.log("You Lose! " + computerChoice + " beats " + humanChoice);
+  computerScore++;
+}
+
 function playRound() {
   const computerChoice = getComputerChoice();
   const humanChoice = getHumanChoice();
@@ -19,24 +31,28 @@ function playRound() {
 
   switch (sameChoice == true) {
     case true:
-      console.log(humanChoice + " & " + computerChoice + ". Tied!");
+      winner = "none";
+      console.log("Tie! both " + humanChoice);
       break;
     case false:
-      humanChoice === "paper" && computerChoice === "rock"
-        ? console.log(humanChoice + " beats " + computerChoice + "! You win!")
-        : humanChoice === "paper" && computerChoice === "scissor"
-          ? console.log(computerChoice + " beats " + humanChoice + "! You lose!")
-          : humanChoice === "rock" && computerChoice === "scissor"
-            ? console.log(humanChoice + " beats " + computerChoice + "! You win!")
-            : humanChoice === "rock" && computerChoice === "paper"
-              ? console.log(computerChoice + " beats " + humanChoice + "! You lose!")
-              : humanChoice === "scissor" && computerChoice === "paper"
-                ? console.log(humanChoice + " beats " + computerChoice + "! You win!")
-                : console.log(computerChoice + " beats " + humanChoice + "! You lose!");
-      break;
+      if (humanChoice === "paper" && computerChoice === "rock") {
+        humanWin(humanChoice, computerChoice);
+      } else if (humanChoice === "rock" && computerChoice === "scissor") {
+        humanWin(humanChoice, computerChoice);
+      } else if (humanChoice === "scissor" && computerChoice === "paper") {
+        humanWin(humanChoice, computerChoice);
+      } else {
+        computerWin(humanChoice, computerChoice);
+      }
   }
 }
 
-// console.log(getComputerChoice());
-// console.log(getHumanChoice());
-playRound();
+function playGame() {
+  for (let i = 0; i < 5; i++) {
+    playRound();
+    console.log("human: " + humanScore + " computer: " + computerScore);
+  }
+  console.log("Final Score: " + "human: " + humanScore + " computer: " + computerScore);
+}
+
+playGame();
